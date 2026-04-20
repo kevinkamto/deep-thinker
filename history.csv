@@ -1,0 +1,2 @@
+timestamp,machine_id,rpm,vibration_mm_s,temp_c,voltage,current_amperes,fault
+2026-04-20T14:34:44Z,CNC-04,2324,1.8,65,233,7.3,0
