@@ -29,7 +29,7 @@ frontend (Next.js 16)  ←→  backend (FastAPI + LangGraph)
 cd backend
 uv sync
 cp .env.example .env   # fill in OPENAI_API_KEY, TAVILY_API_KEY
-uv run python -m app.main
+uv run main.py
 ```
 
 ### Frontend

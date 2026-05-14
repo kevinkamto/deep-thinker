@@ -42,7 +42,7 @@ LLM_MODEL=gpt-4o-mini
 ## Run
 
 ```bash
-uv run python -m app.main
+uv run main.py
 ```
 
 ## API

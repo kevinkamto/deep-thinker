@@ -30,7 +30,7 @@ Package manager: **uv** (Python 3.12+)
 
 ```
 uv sync                       # install dependencies
-uv run python -m app.main     # dev server on :8000
+uv run main.py                # dev server on :8000
 uv run ruff check .           # lint
 uv run ruff format .          # format
 uv run pytest                 # run all tests

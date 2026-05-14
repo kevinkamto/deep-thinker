@@ -1,7 +1,7 @@
 [project]
-name = "research-agent-backend"
+name = "deep-thinker-backend"
 version = "0.1.0"
-description = "AI Research Command Center - multi-agent backend"
+description = "Deep Thinker - multi-agent research backend"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115",
