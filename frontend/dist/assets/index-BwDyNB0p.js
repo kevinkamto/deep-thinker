@@ -18959,9 +18959,9 @@ var $d = {
 function ef(e, t, n) {
   switch (e) {
     case `PLAN_CREATED`:
-      return `Plan created — ${t.subtopics?.length ?? 0} subtopics`
+      return `Plan created - ${t.subtopics?.length ?? 0} subtopics`
     case `SOURCES_COLLECTED`:
-      return `Sources collected${n ? ` [${n}]` : ``} — ${t.count ?? 0} results`
+      return `Sources collected${n ? ` [${n}]` : ``} - ${t.count ?? 0} results`
     case `SUMMARY_DONE`:
       return `Summary done${n ? ` [${n}]` : ``}`
     case `REPORT_CHUNK`:

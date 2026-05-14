@@ -1,99 +1,114 @@
-import { useState, useEffect, useRef } from "react"
 import { useResearchStore } from "@/store/useResearchStore"
 import CommandBar from "@/components/CommandBar"
-import AgentTraceTree from "@/components/AgentTraceTree"
+import AgentPipeline from "@/components/AgentPipeline"
 import LogStream from "@/components/LogStream"
 import SourcesPanel from "@/components/SourcesPanel"
 import ReportViewer from "@/components/ReportViewer"
 import SessionDrawer from "@/components/SessionDrawer"
 import StatusBar from "@/components/StatusBar"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function App() {
   const hasReport = useResearchStore((s) => s.reportChunks.length > 0)
   const isRunning = useResearchStore((s) => s.isRunning)
-  const [reportOpen, setReportOpen] = useState(false)
-  const prevRunning = useRef(false)
-
-  useEffect(() => {
-    if (prevRunning.current && !isRunning && hasReport) {
-      const t = setTimeout(() => setReportOpen(true), 2000)
-      return () => clearTimeout(t)
-    }
-    prevRunning.current = isRunning
-  }, [isRunning, hasReport])
+  const query = useResearchStore((s) => s.query)
 
   return (
     <div
-      className="grid-bg flex h-screen flex-col overflow-hidden"
+      className="grid-bg relative flex h-screen justify-center overflow-hidden"
       style={{ fontFamily: "var(--font-mono)" }}
     >
-      {/* Header */}
-      <header className="flex shrink-0 items-center gap-3 border-b border-zinc-800/60 bg-black/30 px-6 py-3 backdrop-blur-sm">
-        <span className="text-lg text-indigo-400">⬡</span>
-        <span className="font-mono text-sm tracking-wider text-zinc-300">
-          RESEARCH COMMAND CENTER
-        </span>
-      </header>
+      <div className="relative z-10 flex h-full w-full max-w-360 flex-col border-x border-amber-900/10">
 
-      {/* Command Bar */}
-      <div className="shrink-0 border-b border-zinc-800/40 bg-black/20 px-6 py-4">
-        <CommandBar />
-      </div>
-
-      {/* Main 3-column layout */}
-      <div className="flex min-h-0 flex-1 divide-x divide-zinc-800/40 overflow-hidden">
-        {/* Left: Agent Trace */}
-        <div className="w-52 shrink-0 overflow-y-auto bg-black/10 p-4">
-          <AgentTraceTree />
-        </div>
-
-        {/* Center: Log Stream */}
-        <div className="flex flex-1 flex-col overflow-hidden p-4">
-          <p className="mb-3 font-mono text-[10px] tracking-widest text-zinc-600 uppercase">
-            Live Log
-          </p>
-          <div className="flex-1 overflow-hidden">
-            <LogStream />
+        {/* Header */}
+        <header className="flex shrink-0 items-center gap-4 border-b border-stone-800/60 bg-black/40 px-6 py-3 backdrop-blur-md">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/10 ring-1 ring-amber-500/30">
+              <span className="font-mono text-xs font-bold text-amber-400">DT</span>
+            </div>
+            <div>
+              <span className="font-mono text-xs font-semibold tracking-widest text-stone-200">
+                DEEP THINKER
+              </span>
+              <span className="ml-2 font-mono text-[9px] tracking-wider text-stone-600">
+                AI RESEARCH AGENT
+              </span>
+            </div>
           </div>
-        </div>
-
-        {/* Right: Sources */}
-        <div className="flex w-80 shrink-0 flex-col overflow-hidden p-4">
-          <p className="mb-3 font-mono text-[10px] tracking-widest text-zinc-600 uppercase">
-            Sources
-          </p>
-          <div className="flex-1 overflow-hidden">
-            <SourcesPanel />
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="flex shrink-0 items-center gap-4 border-t border-zinc-800/40 bg-black/30 px-6 py-2">
-        <SessionDrawer />
-        {hasReport && (
-          <Button variant="indigo" size="sm" onClick={() => setReportOpen(true)}>
-            ↗ View Report
-          </Button>
-        )}
-        <div className="flex-1">
+          <div className="flex-1" />
           <StatusBar />
-        </div>
-      </footer>
+          <div className="h-4 w-px bg-stone-800" />
+          <SessionDrawer />
+        </header>
 
-      {/* Report Dialog */}
-      <Dialog open={reportOpen} onOpenChange={setReportOpen}>
-        <DialogContent className="flex max-h-[85vh] w-205 max-w-[90vw] flex-col overflow-hidden">
-          <DialogHeader>
-            <DialogTitle>Research Report</DialogTitle>
-          </DialogHeader>
-          <div className="flex-1 overflow-y-auto p-6">
-            <ReportViewer />
+        {/* Command Bar */}
+        <div className="shrink-0 border-b border-stone-800/40 bg-black/20 px-6 py-4">
+          <CommandBar />
+        </div>
+
+        {/* Main 2-column layout */}
+        <div className="flex min-h-0 flex-1 overflow-hidden">
+          <div className="flex min-w-0 flex-55 flex-col border-r border-stone-800/40 overflow-hidden">
+            <div className="flex shrink-0 items-center gap-2 border-b border-stone-800/30 px-5 py-2">
+              <span className="text-[10px] text-amber-600">◈</span>
+              <p className="font-mono text-[10px] tracking-widest text-stone-600 uppercase">
+                Thinking Stream
+              </p>
+            </div>
+            <div className="flex-1 overflow-hidden p-4">
+              <LogStream />
+            </div>
           </div>
-        </DialogContent>
-      </Dialog>
+
+          <div className="flex min-w-0 flex-45 flex-col overflow-hidden">
+            <div className="flex shrink-0 items-center gap-2 border-b border-stone-800/30 px-5 py-2">
+              <span className="text-[10px] text-emerald-700">◎</span>
+              <p className="font-mono text-[10px] tracking-widest text-stone-600 uppercase">
+                Research Sources
+              </p>
+            </div>
+            <div className="flex-1 overflow-hidden p-4">
+              <SourcesPanel />
+            </div>
+          </div>
+        </div>
+
+        {/* Agent Pipeline */}
+        <div className="shrink-0 border-t border-stone-800/40 bg-black/30">
+          <AgentPipeline />
+        </div>
+
+        {/* Inline Report */}
+        <AnimatePresence>
+          {hasReport && (
+            <motion.div
+              key="report"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="shrink-0 overflow-hidden border-t border-amber-900/30 bg-black/40"
+            >
+              <div className="flex items-center justify-between border-b border-stone-800/40 px-6 py-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-amber-500">◆</span>
+                  <p className="font-mono text-[10px] tracking-widest text-stone-500 uppercase">
+                    Deep Analysis
+                  </p>
+                </div>
+                {query && (
+                  <p className="max-w-xs truncate font-mono text-[10px] text-stone-600 italic">
+                    "{query}"
+                  </p>
+                )}
+              </div>
+              <div className="max-h-80 overflow-y-auto px-6 py-5">
+                <ReportViewer />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }

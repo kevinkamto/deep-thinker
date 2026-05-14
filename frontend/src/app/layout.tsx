@@ -15,7 +15,8 @@ const playfairDisplay = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Research Command Center",
+  title: "Deep Thinker",
+  description: "AI-powered deep research agent - parallel web search, synthesis, live streaming",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
