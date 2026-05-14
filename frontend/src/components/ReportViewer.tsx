@@ -54,7 +54,7 @@ export default function ReportViewer() {
 
       {/* Streaming cursor */}
       {!isDone && (
-        <span className="ml-0.5 inline-block h-4 w-[3px] rounded-sm bg-amber-400 cursor-blink" />
+        <span className="cursor-blink ml-0.5 inline-block h-4 w-0.75 rounded-sm bg-amber-400" />
       )}
     </motion.div>
   )
