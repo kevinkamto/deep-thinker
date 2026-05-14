@@ -1,6 +1,6 @@
 # Deep Thinker
 
-A full-stack AI research agent that breaks complex questions into parallel research threads, searches the web, summarizes findings, and synthesizes a final report — all streamed live to the UI.
+A full-stack AI research agent that breaks complex questions into parallel research threads, searches the web, summarizes findings, and synthesizes a final report - all streamed live to the UI.
 
 ## Architecture
 

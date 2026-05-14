@@ -1,26 +1,16 @@
-# Research Agent - Backend
+# Deep Thinker - Backend
 
-FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](https://github.com/vectorleap-pulse/portfolio-research-agent).
-
-![Demo](images/demo.gif)
-
-## Repositories
-
-| | Link |
-|---|---|
-| Main | [portfolio-research-agent](https://github.com/vectorleap-pulse/portfolio-research-agent) |
-| Backend (this) | [portfolio-research-agent-backend](https://github.com/vectorleap-pulse/portfolio-research-agent-backend) |
-| Frontend | [portfolio-research-agent-frontend](https://github.com/vectorleap-pulse/portfolio-research-agent-frontend) |
+FastAPI + LangGraph multi-agent backend for the Deep Thinker AI research agent.
 
 ## Stack
 
 | Layer           | Technology                                                              |
 | --------------- | ----------------------------------------------------------------------- |
 | API             | FastAPI + Uvicorn                                                       |
-| Agent framework | LangGraph `StateGraph`                                                |
-| LLM             | `langchain-openai` (`ChatOpenAI`) - OpenAI + Groq via `base_url` |
+| Agent framework | LangGraph `StateGraph`                                                  |
+| LLM             | `langchain-openai` (`ChatOpenAI`) - OpenAI + Groq via `base_url`       |
 | Web search      | Tavily Python client                                                    |
-| Streaming       | WebSocket + LangGraph `.astream_events()`                             |
+| Streaming       | WebSocket + LangGraph `.astream_events()`                               |
 | Validation      | Pydantic v2 + pydantic-settings                                         |
 | Package manager | uv                                                                      |
 | Linter          | Ruff                                                                    |
@@ -30,7 +20,7 @@ FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](htt
 
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/)
-- API keys: OpenAI, Groq, Tavily
+- API keys: OpenAI (or Groq), Tavily
 
 ## Setup
 
@@ -102,4 +92,5 @@ uv run ruff format .
 
 # Tests
 uv run pytest
+uv run pytest tests/test_foo.py::test_bar   # single test
 ```

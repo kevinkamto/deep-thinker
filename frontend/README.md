@@ -1,16 +1,6 @@
-# Research Agent - Frontend
+# Deep Thinker - Frontend
 
-Next.js frontend for the [AI Research Command Center](https://github.com/vectorleap-pulse/portfolio-research-agent).
-
-![Demo](images/demo.gif)
-
-## Repositories
-
-|                 | Link                                                                                                |
-| --------------- | --------------------------------------------------------------------------------------------------- |
-| Main            | [portfolio-research-agent](https://github.com/vectorleap-pulse/portfolio-research-agent)                   |
-| Backend         | [portfolio-research-agent-backend](https://github.com/vectorleap-pulse/portfolio-research-agent-backend)   |
-| Frontend (this) | [portfolio-research-agent-frontend](https://github.com/vectorleap-pulse/portfolio-research-agent-frontend) |
+Next.js 16 frontend for the Deep Thinker AI research agent.
 
 ## Stack
 
@@ -40,54 +30,55 @@ cp .env.example .env.local  # set API URL
 ## Environment Variables
 
 ```env
-VITE_API_URL=http://localhost:8000
-VITE_WS_URL=ws://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
 ## Run
 
 ```bash
-pnpm dev        # dev server → http://localhost:5173
-pnpm build      # production build → dist/
-pnpm preview    # preview production build
+pnpm dev        # dev server → http://localhost:3000
+pnpm build      # production build
+pnpm lint       # ESLint
+pnpm format     # Prettier
 ```
 
 ## UI Layout
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  HEADER: logo + provider selector (OpenAI / Groq) + model pick  │
+│  ◉ DEEP THINKER                    [Sessions] · [status]        │
 ├─────────────────────────────────────────────────────────────────┤
-│  COMMAND BAR: full-width query input                            │
-├──────────────┬──────────────────────────┬───────────────────────┤
-│  AGENT TRACE │   LIVE LOG STREAM        │   SOURCES PANEL       │
-│  (left 20%)  │   (center 50%)           │   (right 30%)         │
-├──────────────┴──────────────────────────┴───────────────────────┤
-│  REPORT PANEL (expands on REPORT_DONE)                          │
+│  What do you want to know?  ________________________  [THINK ▶] │
+├──────────────────────────────┬──────────────────────────────────┤
+│  THINKING STREAM             │  RESEARCH SOURCES                │
+│  (live event log, 55%)       │  (tabbed by subtopic, 45%)       │
+│                              │                                   │
+├──────────────────────────────┴──────────────────────────────────┤
+│  [Planner ●─── Researcher ×N ●─── Summarizer ─── Synthesizer]  │
 ├─────────────────────────────────────────────────────────────────┤
-│  SESSION HISTORY (bottom drawer)                                │
+│  ↓ DEEP ANALYSIS REPORT (inline, slides in on completion)       │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Components
 
-| Component            | Description                                                  |
-| -------------------- | ------------------------------------------------------------ |
-| `CommandBar`       | Full-width query input with animated placeholder             |
-| `ProviderSelector` | OpenAI / Groq + model picker                                 |
-| `AgentTraceTree`   | Animated tree: idle → active → done → error per node      |
-| `LogStream`        | Auto-scrolling terminal log, color-coded by event type       |
+| Component          | Description                                                  |
+| ------------------ | ------------------------------------------------------------ |
+| `CommandBar`       | Query input with animated placeholder, amber accent          |
+| `AgentPipeline`    | Horizontal pipeline timeline: idle → active → done → error  |
+| `LogStream`        | Timeline-style live event log, color-coded by event type     |
 | `SourcesPanel`     | Tabbed by subtopic, source cards with domain badge and score |
-| `ReportViewer`     | Streaming markdown renderer, serif font, section anchors     |
-| `SessionDrawer`    | Slide-up list of past sessions from `/api/sessions`        |
-| `StatusBar`        | Current agent, token count, latency                          |
+| `ReportViewer`     | Inline streaming markdown renderer, slides in on completion  |
+| `SessionDrawer`    | Slide-in panel of past sessions, triggered from header       |
+| `StatusBar`        | Embedded in header: active agent, event count, source count  |
 
 ## State
 
-Zustand store `useResearchStore` holds: `session`, `events[]`, `sources[]`, `reportChunks[]`, `agentStatuses{}`.
+Zustand store `useResearchStore` holds: `session`, `events[]`, `sources{}`, `reportChunks[]`, `agentStatuses{}`, `subtopics[]`, `isRunning`.
 
 ## Lint
 
 ```bash
 pnpm lint
+pnpm format:check
 ```
