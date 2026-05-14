@@ -91,18 +91,18 @@ SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR
 
 **Layout (`page.tsx`):**
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│  [DT] DEEP THINKER · AI RESEARCH AGENT    [status] [Sessions]   │
-├─────────────────────────────────────────────────────────────────┤
-│  CommandBar: query input + "ANALYZE →" pill gradient button     │
-├──────────────────────────────┬──────────────────────────────────┤
-│  THINKING STREAM (55%)       │  RESEARCH SOURCES (45%)          │
+┌──────────────────────────────────────────────────────────────────┐
+│  [DT] DEEP THINKER · AI RESEARCH AGENT    [status] [Sessions]    │
+├──────────────────────────────────────────────────────────────────┤
+│  CommandBar: query input + "ANALYZE →" pill gradient button      │
+├──────────────────────────────┬───────────────────────────────────┤
+│  THINKING STREAM (55%)       │  RESEARCH SOURCES (45%)           │
 │  Timeline-style event log    │  Tabbed by subtopic, source cards │
-├──────────────────────────────┴──────────────────────────────────┤
-│  AGENT PIPELINE: [Planner]──[Researcher ×N]──[Summarizer]──[Syn]│
-├─────────────────────────────────────────────────────────────────┤
-│  DEEP ANALYSIS (inline, animates in on completion)              │
-└─────────────────────────────────────────────────────────────────┘
+├──────────────────────────────┴───────────────────────────────────┤
+│  AGENT PIPELINE: [Planner]──[Researcher ×N]──[Summarizer]──[Syn] │
+├──────────────────────────────────────────────────────────────────┤
+│  DEEP ANALYSIS (inline, animates in on completion)               │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 **Key structural differences from a typical layout:**
