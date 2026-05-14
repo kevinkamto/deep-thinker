@@ -37,6 +37,8 @@ uv run pytest                 # run all tests
 uv run pytest tests/test_foo.py::test_bar  # single test
 ```
 
+Entry point is `backend/main.py` (moved from `backend/app/main.py`). All agent logic still lives under `backend/app/`.
+
 Environment variables go in `backend/.env`. Required: `OPENAI_API_KEY` (or `GROQ_API_KEY`), `TAVILY_API_KEY`. LLM selection via `LLM_PROVIDER` and `LLM_MODEL`.
 
 ---
@@ -58,18 +60,16 @@ START → planner → [Send fan-out] → researcher ×N (parallel)
 **State** (`app/state.py`): TypedDict - `query`, `session_id`, `subtopics: list[str]`, `results: list[SubtopicResult]` (merged via `add_results` reducer), `report: str`.
 
 **Agents** (`app/agents/`):
-
-- **planner** - LLM call → JSON array of 3–5 subtopic strings
+- **planner** - LLM call → JSON array of 3-5 subtopic strings
 - **researcher** - tool-calling loop with `tavily_search`; one per subtopic via `Send`
 - **summarizer** - LLM summarizes raw search results per subtopic
 - **synthesizer** - LLM streams the final markdown report
 
 **LLM Service** (`app/services/llm.py`): wraps `langchain-openai.ChatOpenAI`; Groq supported via `base_url`. Configured by `app/config.py` (Pydantic Settings).
 
-**API** (`app/main.py`): 5 REST endpoints + 1 WebSocket. Sessions are **in-memory only** - they do not persist across restarts.
+**API** (`backend/main.py`): 5 REST endpoints + 1 WebSocket. Sessions are **in-memory only** - they do not persist across restarts.
 
 WebSocket events pushed to client:
-
 ```
 PLAN_CREATED | SEARCH_DONE | SOURCES_COLLECTED |
 SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR
@@ -79,35 +79,33 @@ SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR
 
 > **Warning**: This uses Next.js 16, which has breaking changes from earlier versions. Before touching routing, layouts, or server components, read the relevant guide in `node_modules/next/dist/docs/`.
 
-**Design System - amber/warm dark palette:**
+**Design System - semi-dark brown / warm dark palette:**
+- Background: `#0e0b09` (dark warm brown-black)
+- Dot-grid: `rgba(180, 83, 9, 0.07)` amber-brown
+- Primary accent: `amber-600/700` (`#d97706` / `#b45309`)
+- Active agent: amber glow with animated border pulse
+- Completed state: `lime-700`
+- Error state: `rose-700`
+- Text: `stone-*` scale (warm brown-grays)
+- Borders: `stone-700`, scrollbar `rgba(180, 83, 9, 0.3)`
 
-- Background: `#09090f` with amber dot-grid (`globals.css`)
-- Primary accent: `amber-400/500` (`#fbbf24` / `#f59e0b`)
-- Active agent glow: amber
-- Completed state: `emerald-500`
-- Error state: `rose-500`
-- Text: `stone-*` scale (warm grays) rather than `zinc-*`
-- Scrollbar, borders, and grid lines all use amber at low opacity
-
-**Layout (page.tsx):**
-
+**Layout (`page.tsx`):**
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│  [DT] DEEP THINKER · AI RESEARCH AGENT    [status] [Sessions]    │
-├──────────────────────────────────────────────────────────────────┤
-│  CommandBar: query input + "THINK DEEP >" button                 │
-├──────────────────────────────┬───────────────────────────────────┤
-│  THINKING STREAM (55%)       │  RESEARCH SOURCES (45%)           │
+┌─────────────────────────────────────────────────────────────────┐
+│  [DT] DEEP THINKER · AI RESEARCH AGENT    [status] [Sessions]   │
+├─────────────────────────────────────────────────────────────────┤
+│  CommandBar: query input + "ANALYZE →" pill gradient button     │
+├──────────────────────────────┬──────────────────────────────────┤
+│  THINKING STREAM (55%)       │  RESEARCH SOURCES (45%)          │
 │  Timeline-style event log    │  Tabbed by subtopic, source cards │
-├──────────────────────────────┴───────────────────────────────────┤
-│  AGENT PIPELINE: [Planner]──[Researcher ×N]──[Summarizer]──[Syn] │
-├──────────────────────────────────────────────────────────────────┤
-│  DEEP ANALYSIS (inline, animates in on completion)               │
-└──────────────────────────────────────────────────────────────────┘
+├──────────────────────────────┴──────────────────────────────────┤
+│  AGENT PIPELINE: [Planner]──[Researcher ×N]──[Summarizer]──[Syn]│
+├─────────────────────────────────────────────────────────────────┤
+│  DEEP ANALYSIS (inline, animates in on completion)              │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 **Key structural differences from a typical layout:**
-
 - No left sidebar - agent status is a **horizontal pipeline bar** below the main content (`AgentPipeline.tsx`)
 - Report is **inline** (animated slide-in section) - not a modal/dialog
 - Sessions panel opens as a **left Sheet** from the header, not a bottom drawer
@@ -118,13 +116,12 @@ SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR
 **API layer** (`lib/api.ts`): HTTP → `/api/*` (proxied by Next.js rewrite to backend). `API_URL` env var controls the target.
 
 **Key components** (`components/`):
-
-- `CommandBar` - amber-accented input; placeholder rotates every 5 s; button reads "THINK DEEP ▶"; animates while running
-- `AgentPipeline` - horizontal 4-node timeline with connecting lines; amber glow on active node; emerald on done; subtopic badge on researcher node
-- `LogStream` - vertical timeline with left-side dot track; each event in a colored card (`amber/sky/emerald/orange/rose`); subtopic chips on entries
-- `SourcesPanel` - tab per subtopic with animated source cards; score shown as animated amber bar; "open ↗" link appears on hover
-- `ReportViewer` - inline markdown with warm prose overrides; amber streaming cursor; copy + export buttons when done
-- `SessionDrawer` - left-side Sheet from header button; hover-reveal delete button
+- `CommandBar` - `border-2 border-stone-600` input (visible at rest); placeholder rotates every 5s at 65% opacity; submit is a `rounded-full` pill with `from-amber-800 to-orange-700` gradient and reads "ANALYZE →"; shows "ANALYZING ◌" while running
+- `AgentPipeline` - horizontal 4-node timeline with connecting lines; amber glow/pulse on active node; `lime-700` on done; subtopic count badge on researcher node
+- `LogStream` - vertical timeline with left-side dot track; each event in a warm-toned card (`amber/orange/lime/yellow/rose`); agent + subtopic chips per entry
+- `SourcesPanel` - tab per subtopic (`amber-700` active); source cards with `amber-700` score bar; "open ↗" link appears on hover
+- `ReportViewer` - inline markdown with warm brown prose overrides; `amber-600` streaming cursor; copy + export buttons when done
+- `SessionDrawer` - left-side Sheet from header button; `lime-600` done / `amber-500` running status colors; hover-reveal delete button
 - `StatusBar` - amber pill in header; shows active agent name while running
 
 **TypeScript path alias**: `@/*` → `src/*`

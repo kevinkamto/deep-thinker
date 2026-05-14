@@ -16,10 +16,10 @@ frontend (Next.js 16)  ←→  backend (FastAPI + LangGraph)
 
 ## Monorepo
 
-| Directory    | Stack                                                |
-| ------------ | ---------------------------------------------------- |
-| `frontend/`  | Next.js 16 + React 19 + TypeScript + Tailwind CSS v4 |
-| `backend/`   | FastAPI + LangGraph + langchain-openai + Tavily      |
+| Directory   | Stack                                                |
+| ----------- | ---------------------------------------------------- |
+| `frontend/` | Next.js 16 + React 19 + TypeScript + Tailwind CSS v4 |
+| `backend/`  | FastAPI + LangGraph + langchain-openai + Tavily      |
 
 ## Quick Start
 

@@ -42,39 +42,52 @@ pnpm lint       # ESLint
 pnpm format     # Prettier
 ```
 
+## Design System
+
+Semi-dark brown / warm dark palette:
+
+| Token          | Value                                      |
+| -------------- | ------------------------------------------ |
+| Background     | `#0e0b09` (dark warm brown-black)          |
+| Grid           | amber-brown dot-grid `rgba(180,83,9,0.07)` |
+| Primary accent | `amber-600/700` — `#d97706` / `#b45309`    |
+| Active state   | amber glow + animated border pulse         |
+| Done state     | `lime-700`                                 |
+| Error state    | `rose-700`                                 |
+| Text scale     | `stone-*` (warm brown-grays)               |
+
 ## UI Layout
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  ◉ DEEP THINKER                    [Sessions] · [status]        │
+│  [DT] DEEP THINKER · AI RESEARCH AGENT    [status] [Sessions]   │
 ├─────────────────────────────────────────────────────────────────┤
-│  What do you want to know?  ________________________  [THINK ▶] │
+│  CommandBar: query input + "ANALYZE →" pill gradient button     │
 ├──────────────────────────────┬──────────────────────────────────┤
-│  THINKING STREAM             │  RESEARCH SOURCES                │
-│  (live event log, 55%)       │  (tabbed by subtopic, 45%)       │
-│                              │                                   │
+│  THINKING STREAM (55%)       │  RESEARCH SOURCES (45%)          │
+│  Timeline-style event log    │  Tabbed by subtopic, source cards │
 ├──────────────────────────────┴──────────────────────────────────┤
 │  [Planner ●─── Researcher ×N ●─── Summarizer ─── Synthesizer]  │
 ├─────────────────────────────────────────────────────────────────┤
-│  ↓ DEEP ANALYSIS REPORT (inline, slides in on completion)       │
+│  DEEP ANALYSIS (inline, slides in on completion)                │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Components
 
-| Component          | Description                                                  |
-| ------------------ | ------------------------------------------------------------ |
-| `CommandBar`       | Query input with animated placeholder, amber accent          |
-| `AgentPipeline`    | Horizontal pipeline timeline: idle → active → done → error  |
-| `LogStream`        | Timeline-style live event log, color-coded by event type     |
-| `SourcesPanel`     | Tabbed by subtopic, source cards with domain badge and score |
-| `ReportViewer`     | Inline streaming markdown renderer, slides in on completion  |
-| `SessionDrawer`    | Slide-in panel of past sessions, triggered from header       |
-| `StatusBar`        | Embedded in header: active agent, event count, source count  |
+| Component       | Description                                                                  |
+| --------------- | ---------------------------------------------------------------------------- |
+| `CommandBar`    | Visible `border-2 border-stone-600` input; "ANALYZE →" pill gradient button  |
+| `AgentPipeline` | Horizontal 4-node timeline; amber pulse on active; lime on done              |
+| `LogStream`     | Vertical timeline with dot track; warm-toned event cards                     |
+| `SourcesPanel`  | Tabs by subtopic; source cards with amber score bar; hover-reveal link        |
+| `ReportViewer`  | Inline streaming markdown; amber cursor; copy + export when done             |
+| `SessionDrawer` | Left Sheet from header; hover-reveal delete                                  |
+| `StatusBar`     | Amber pill in header; shows active agent while running                       |
 
 ## State
 
-Zustand store `useResearchStore` holds: `session`, `events[]`, `sources{}`, `reportChunks[]`, `agentStatuses{}`, `subtopics[]`, `isRunning`.
+Zustand store `useResearchStore` holds: `sessionId`, `query`, `events[]`, `subtopics[]`, `sources{}`, `reportChunks[]`, `agentStatuses{}`, `isRunning`.
 
 ## Lint
 
