@@ -58,24 +58,24 @@ export default function CommandBar() {
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <div
-        className={`relative flex items-center rounded-xl border bg-black/50 backdrop-blur-sm transition-all duration-200 ${
+        className={`relative flex items-center rounded-xl border-2 bg-slate-900/70 backdrop-blur-sm transition-all duration-200 ${
           isRunning
-            ? "border-amber-500/50 shadow-[0_0_20px_rgba(251,191,36,0.08)]"
-            : "border-stone-800 focus-within:border-amber-500/40 focus-within:shadow-[0_0_20px_rgba(251,191,36,0.06)]"
+            ? "border-blue-500/70 shadow-[0_0_24px_rgba(96,165,250,0.15)]"
+            : "border-slate-600 focus-within:border-blue-500/70 focus-within:shadow-[0_0_24px_rgba(96,165,250,0.12)]"
         }`}
       >
         {/* Left icon */}
         <div className="flex shrink-0 items-center gap-2 pl-4">
           {isRunning ? (
             <motion.span
-              className="font-mono text-sm text-amber-400"
+              className="font-mono text-sm text-blue-400"
               animate={{ opacity: [1, 0.4, 1] }}
               transition={{ repeat: Infinity, duration: 1.2 }}
             >
               ◉
             </motion.span>
           ) : (
-            <span className="font-mono text-sm text-stone-600">▷</span>
+            <span className="font-mono text-sm text-slate-400">▷</span>
           )}
         </div>
 
@@ -86,7 +86,7 @@ export default function CommandBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             disabled={isRunning}
-            className="w-full bg-transparent px-3 py-3.5 font-mono text-sm text-stone-100 outline-none placeholder:text-stone-700 disabled:opacity-60"
+            className="w-full bg-transparent px-3 py-3.5 font-mono text-sm text-slate-100 outline-none disabled:opacity-60"
             placeholder=""
           />
           {/* Animated placeholder */}
@@ -95,10 +95,10 @@ export default function CommandBar() {
               <motion.span
                 key={phIdx}
                 initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: fading ? 0 : 0.4, y: 0 }}
+                animate={{ opacity: fading ? 0 : 0.65, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.25 }}
-                className="pointer-events-none absolute inset-0 flex items-center px-3 font-mono text-sm text-stone-600"
+                className="pointer-events-none absolute inset-0 flex items-center px-3 font-mono text-sm text-slate-400"
               >
                 {displayPh}
               </motion.span>
@@ -112,15 +112,18 @@ export default function CommandBar() {
           disabled={isRunning || !query.trim()}
           className={`mr-2 shrink-0 rounded-lg px-4 py-2 font-mono text-xs font-semibold tracking-wider transition-all duration-200 ${
             isRunning
-              ? "cursor-not-allowed bg-amber-900/30 text-amber-600"
+              ? "cursor-not-allowed bg-blue-900/40 text-blue-400"
               : query.trim()
-                ? "bg-amber-500 text-black hover:bg-amber-400 active:scale-95"
-                : "cursor-not-allowed bg-stone-800 text-stone-600"
+                ? "bg-blue-500 text-white hover:bg-blue-400 active:scale-95 shadow-[0_0_12px_rgba(96,165,250,0.3)]"
+                : "cursor-not-allowed bg-slate-700/60 text-slate-500"
           }`}
         >
           {isRunning ? (
             <span className="flex items-center gap-1.5">
-              <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
+              <motion.span
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+              >
                 ◌
               </motion.span>
               THINKING

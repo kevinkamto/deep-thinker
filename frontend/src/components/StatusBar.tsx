@@ -12,18 +12,17 @@ export default function StatusBar() {
 
   return (
     <div className="flex items-center gap-3 font-mono text-[10px]">
-      {/* Status pill */}
       <div
         className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 ${
           isRunning
-            ? "bg-amber-950/60 text-amber-400 ring-1 ring-amber-500/30"
-            : "bg-stone-900 text-stone-600"
+            ? "bg-blue-950/60 text-blue-400 ring-1 ring-blue-500/30"
+            : "bg-slate-800 text-slate-500"
         }`}
       >
         {isRunning ? (
           <>
             <motion.span
-              className="h-1.5 w-1.5 rounded-full bg-amber-400"
+              className="h-1.5 w-1.5 rounded-full bg-blue-400"
               animate={{ opacity: [1, 0.3, 1] }}
               transition={{ repeat: Infinity, duration: 1 }}
             />
@@ -31,19 +30,14 @@ export default function StatusBar() {
           </>
         ) : (
           <>
-            <span className="h-1.5 w-1.5 rounded-full bg-stone-700" />
+            <span className="h-1.5 w-1.5 rounded-full bg-slate-600" />
             <span>idle</span>
           </>
         )}
       </div>
 
-      {/* Stats */}
-      {eventCount > 0 && (
-        <span className="text-stone-700">{eventCount} events</span>
-      )}
-      {sourceCount > 0 && (
-        <span className="text-stone-700">{sourceCount} sources</span>
-      )}
+      {eventCount > 0 && <span className="text-slate-600">{eventCount} events</span>}
+      {sourceCount > 0 && <span className="text-slate-600">{sourceCount} sources</span>}
     </div>
   )
 }

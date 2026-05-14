@@ -4,8 +4,8 @@
 :root {
   --font-mono: "JetBrains Mono", monospace;
   --font-serif: "Playfair Display", serif;
-  --color-amber-glow: rgba(251, 191, 36, 0.15);
-  --color-border: rgba(251, 191, 36, 0.12);
+  --color-blue-glow: rgba(96, 165, 250, 0.15);
+  --color-border: rgba(96, 165, 250, 0.12);
 }
 
 * {
@@ -18,8 +18,8 @@ body {
 }
 
 body {
-  background-color: #09090f;
-  color: #f5f0e8;
+  background-color: #0b1120;
+  color: #e2e8f0;
   font-family: var(--font-mono);
   -webkit-font-smoothing: antialiased;
   margin: 0;
@@ -29,28 +29,28 @@ body {
   font-family: var(--font-serif);
 }
 
-/* Amber dot-grid background */
+/* Semi-dark blue dot-grid background */
 .grid-bg {
-  background-image: radial-gradient(circle, rgba(251, 191, 36, 0.07) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(96, 165, 250, 0.06) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
-/* Subtle noise overlay */
+/* Subtle blue gradient overlay */
 .grid-bg::before {
   content: "";
   position: fixed;
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(251, 191, 36, 0.03) 0%,
-    transparent 40%,
-    rgba(249, 115, 22, 0.02) 100%
+    rgba(59, 130, 246, 0.04) 0%,
+    transparent 50%,
+    rgba(99, 102, 241, 0.03) 100%
   );
   pointer-events: none;
   z-index: 0;
 }
 
-/* Custom scrollbar - amber */
+/* Custom scrollbar - blue */
 ::-webkit-scrollbar {
   width: 3px;
   height: 3px;
@@ -59,94 +59,88 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(251, 191, 36, 0.25);
+  background: rgba(96, 165, 250, 0.25);
   border-radius: 2px;
 }
 
-/* Pipeline connector line */
+/* Pipeline connector */
 .pipeline-line {
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.4), transparent);
 }
 
-/* Amber pulse animation */
-@keyframes amber-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
-  50% { box-shadow: 0 0 0 6px rgba(251, 191, 36, 0); }
+/* Blue pulse animation */
+@keyframes blue-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(96, 165, 250, 0); }
 }
 
-.pulse-amber {
-  animation: amber-pulse 1.5s ease-in-out infinite;
+.pulse-blue {
+  animation: blue-pulse 1.5s ease-in-out infinite;
 }
 
-/* Report prose overrides - warm palette */
+/* Report prose overrides - blue-tinted dark palette */
 .prose h1,
 .prose h2,
 .prose h3 {
   font-family: var(--font-serif);
-  color: #f5f0e8;
+  color: #e2e8f0;
 }
 
 .prose h2 {
-  border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+  border-bottom: 1px solid rgba(96, 165, 250, 0.2);
   padding-bottom: 0.5rem;
 }
 
 .prose p {
-  color: #a8a29e;
+  color: #94a3b8;
   line-height: 1.85;
 }
 
 .prose a {
-  color: #fbbf24;
-  text-decoration-color: rgba(251, 191, 36, 0.3);
+  color: #60a5fa;
+  text-decoration-color: rgba(96, 165, 250, 0.3);
 }
 
 .prose a:hover {
-  color: #fcd34d;
+  color: #93c5fd;
 }
 
 .prose strong {
-  color: #f5f0e8;
+  color: #e2e8f0;
 }
 
 .prose code {
-  color: #fb923c;
-  background: rgba(249, 115, 22, 0.1);
+  color: #7dd3fc;
+  background: rgba(125, 211, 252, 0.1);
   padding: 0.1rem 0.3rem;
   border-radius: 3px;
   font-size: 0.85em;
 }
 
 .prose li {
-  color: #a8a29e;
+  color: #94a3b8;
 }
 
 .prose blockquote {
-  border-left-color: rgba(251, 191, 36, 0.4);
-  color: #a8a29e;
+  border-left-color: rgba(96, 165, 250, 0.4);
+  color: #94a3b8;
 }
 
 /* Slide-in animation for report section */
 @keyframes slide-down {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .slide-down {
   animation: slide-down 0.35s ease-out forwards;
 }
 
-/* Thinking cursor blink */
+/* Cursor blink */
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  50%       { opacity: 0; }
 }
 
 .cursor-blink {
