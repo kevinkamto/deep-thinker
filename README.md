@@ -4,9 +4,6 @@ A full-stack AI research agent that breaks complex questions into parallel resea
 
 ## Screenshots
 
-![Initial state](images/thumb.png)
-*Initial state — ready to accept a research query*
-
 ![Research running](images/running.png)
 *Running — parallel researcher threads searching the web, results streaming in real time*
 
@@ -27,8 +24,8 @@ frontend (Next.js 16)  ←→  backend (FastAPI + LangGraph)
 
 ## Monorepo
 
-| Directory   | Stack                                                |
-| ----------- | ---------------------------------------------------- |
+| Directory     | Stack                                                |
+| ------------- | ---------------------------------------------------- |
 | `frontend/` | Next.js 16 + React 19 + TypeScript + Tailwind CSS v4 |
 | `backend/`  | FastAPI + LangGraph + langchain-openai + Tavily      |
 
