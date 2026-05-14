@@ -58,6 +58,7 @@ START → planner → [Send fan-out] → researcher ×N (parallel)
 **State** (`app/state.py`): TypedDict - `query`, `session_id`, `subtopics: list[str]`, `results: list[SubtopicResult]` (merged via `add_results` reducer), `report: str`.
 
 **Agents** (`app/agents/`):
+
 - **planner** - LLM call → JSON array of 3–5 subtopic strings
 - **researcher** - tool-calling loop with `tavily_search`; one per subtopic via `Send`
 - **summarizer** - LLM summarizes raw search results per subtopic
@@ -68,6 +69,7 @@ START → planner → [Send fan-out] → researcher ×N (parallel)
 **API** (`app/main.py`): 5 REST endpoints + 1 WebSocket. Sessions are **in-memory only** - they do not persist across restarts.
 
 WebSocket events pushed to client:
+
 ```
 PLAN_CREATED | SEARCH_DONE | SOURCES_COLLECTED |
 SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR
@@ -78,6 +80,7 @@ SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR
 > **Warning**: This uses Next.js 16, which has breaking changes from earlier versions. Before touching routing, layouts, or server components, read the relevant guide in `node_modules/next/dist/docs/`.
 
 **Design System - amber/warm dark palette:**
+
 - Background: `#09090f` with amber dot-grid (`globals.css`)
 - Primary accent: `amber-400/500` (`#fbbf24` / `#f59e0b`)
 - Active agent glow: amber
@@ -87,22 +90,24 @@ SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR
 - Scrollbar, borders, and grid lines all use amber at low opacity
 
 **Layout (page.tsx):**
+
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│  [DT] DEEP THINKER · AI RESEARCH AGENT    [status] [Sessions]   │
-├─────────────────────────────────────────────────────────────────┤
-│  CommandBar: query input + "THINK DEEP ▶" button                │
-├──────────────────────────────┬──────────────────────────────────┤
-│  THINKING STREAM (55%)       │  RESEARCH SOURCES (45%)          │
+┌──────────────────────────────────────────────────────────────────┐
+│  [DT] DEEP THINKER · AI RESEARCH AGENT    [status] [Sessions]    │
+├──────────────────────────────────────────────────────────────────┤
+│  CommandBar: query input + "THINK DEEP >" button                 │
+├──────────────────────────────┬───────────────────────────────────┤
+│  THINKING STREAM (55%)       │  RESEARCH SOURCES (45%)           │
 │  Timeline-style event log    │  Tabbed by subtopic, source cards │
-├──────────────────────────────┴──────────────────────────────────┤
-│  AGENT PIPELINE: [Planner]──[Researcher ×N]──[Summarizer]──[Syn]│
-├─────────────────────────────────────────────────────────────────┤
-│  DEEP ANALYSIS (inline, animates in on completion)              │
-└─────────────────────────────────────────────────────────────────┘
+├──────────────────────────────┴───────────────────────────────────┤
+│  AGENT PIPELINE: [Planner]──[Researcher ×N]──[Summarizer]──[Syn] │
+├──────────────────────────────────────────────────────────────────┤
+│  DEEP ANALYSIS (inline, animates in on completion)               │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 **Key structural differences from a typical layout:**
+
 - No left sidebar - agent status is a **horizontal pipeline bar** below the main content (`AgentPipeline.tsx`)
 - Report is **inline** (animated slide-in section) - not a modal/dialog
 - Sessions panel opens as a **left Sheet** from the header, not a bottom drawer
@@ -113,6 +118,7 @@ SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR
 **API layer** (`lib/api.ts`): HTTP → `/api/*` (proxied by Next.js rewrite to backend). `API_URL` env var controls the target.
 
 **Key components** (`components/`):
+
 - `CommandBar` - amber-accented input; placeholder rotates every 5 s; button reads "THINK DEEP ▶"; animates while running
 - `AgentPipeline` - horizontal 4-node timeline with connecting lines; amber glow on active node; emerald on done; subtopic badge on researcher node
 - `LogStream` - vertical timeline with left-side dot track; each event in a colored card (`amber/sky/emerald/orange/rose`); subtopic chips on entries

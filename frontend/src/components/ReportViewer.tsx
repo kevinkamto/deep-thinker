@@ -14,7 +14,7 @@ export default function ReportViewer() {
   if (!report) {
     return (
       <div className="flex h-24 items-center justify-center">
-        <p className="font-mono text-xs text-slate-600">Report will appear here when ready...</p>
+        <p className="font-mono text-xs text-stone-600">Report will appear here when ready...</p>
       </div>
     )
   }
@@ -26,7 +26,7 @@ export default function ReportViewer() {
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
       {isDone && (
-        <div className="mb-5 flex items-center gap-3 border-b border-slate-700 pb-4">
+        <div className="mb-5 flex items-center gap-3 border-b border-stone-700 pb-4">
           <button
             onClick={() => navigator.clipboard.writeText(report)}
             className={buttonVariants({ variant: "outline", size: "sm" })}
@@ -40,7 +40,7 @@ export default function ReportViewer() {
           >
             Export .md
           </a>
-          <span className="ml-auto font-mono text-[10px] text-slate-500">
+          <span className="ml-auto font-mono text-[10px] text-stone-500">
             {report.trim().split(/\s+/).length.toLocaleString()} words
           </span>
         </div>
@@ -51,7 +51,7 @@ export default function ReportViewer() {
       </div>
 
       {!isDone && (
-        <span className="cursor-blink ml-0.5 inline-block h-4 w-0.75 rounded-sm bg-blue-400" />
+        <span className="cursor-blink ml-0.5 inline-block h-4 w-0.75 rounded-sm bg-amber-600" />
       )}
     </motion.div>
   )

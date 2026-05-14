@@ -58,24 +58,24 @@ export default function CommandBar() {
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <div
-        className={`relative flex items-center rounded-xl border-2 bg-slate-900/70 backdrop-blur-sm transition-all duration-200 ${
+        className={`relative flex items-center rounded-xl border-2 bg-stone-900/70 backdrop-blur-sm transition-all duration-200 ${
           isRunning
-            ? "border-blue-500/70 shadow-[0_0_24px_rgba(96,165,250,0.15)]"
-            : "border-slate-600 focus-within:border-blue-500/70 focus-within:shadow-[0_0_24px_rgba(96,165,250,0.12)]"
+            ? "border-amber-700/60 shadow-[0_0_24px_rgba(180,83,9,0.18)]"
+            : "border-stone-600 focus-within:border-amber-700/60 focus-within:shadow-[0_0_24px_rgba(180,83,9,0.12)]"
         }`}
       >
         {/* Left icon */}
         <div className="flex shrink-0 items-center gap-2 pl-4">
           {isRunning ? (
             <motion.span
-              className="font-mono text-sm text-blue-400"
+              className="font-mono text-sm text-amber-600"
               animate={{ opacity: [1, 0.4, 1] }}
               transition={{ repeat: Infinity, duration: 1.2 }}
             >
               ◉
             </motion.span>
           ) : (
-            <span className="font-mono text-sm text-slate-400">▷</span>
+            <span className="font-mono text-sm text-stone-400">▷</span>
           )}
         </div>
 
@@ -86,7 +86,7 @@ export default function CommandBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             disabled={isRunning}
-            className="w-full bg-transparent px-3 py-3.5 font-mono text-sm text-slate-100 outline-none disabled:opacity-60"
+            className="w-full bg-transparent px-3 py-3.5 font-mono text-sm text-stone-100 outline-none disabled:opacity-60"
             placeholder=""
           />
           {/* Animated placeholder */}
@@ -98,7 +98,7 @@ export default function CommandBar() {
                 animate={{ opacity: fading ? 0 : 0.65, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.25 }}
-                className="pointer-events-none absolute inset-0 flex items-center px-3 font-mono text-sm text-slate-400"
+                className="pointer-events-none absolute inset-0 flex items-center px-3 font-mono text-sm text-stone-400"
               >
                 {displayPh}
               </motion.span>
@@ -106,16 +106,16 @@ export default function CommandBar() {
           )}
         </div>
 
-        {/* Submit button */}
+        {/* Submit button — pill gradient */}
         <button
           type="submit"
           disabled={isRunning || !query.trim()}
-          className={`mr-2 shrink-0 rounded-lg px-4 py-2 font-mono text-xs font-semibold tracking-wider transition-all duration-200 ${
+          className={`mr-2 shrink-0 rounded-full px-5 py-2 font-mono text-xs font-semibold tracking-wider transition-all duration-200 ${
             isRunning
-              ? "cursor-not-allowed bg-blue-900/40 text-blue-400"
+              ? "cursor-not-allowed bg-stone-800 text-stone-500"
               : query.trim()
-                ? "bg-blue-500 text-white hover:bg-blue-400 active:scale-95 shadow-[0_0_12px_rgba(96,165,250,0.3)]"
-                : "cursor-not-allowed bg-slate-700/60 text-slate-500"
+                ? "bg-gradient-to-r from-amber-800 to-orange-700 text-stone-100 hover:from-amber-700 hover:to-orange-600 active:scale-95 shadow-[0_2px_16px_rgba(180,83,9,0.35)]"
+                : "cursor-not-allowed bg-stone-800/60 text-stone-600"
           }`}
         >
           {isRunning ? (
@@ -126,10 +126,13 @@ export default function CommandBar() {
               >
                 ◌
               </motion.span>
-              THINKING
+              ANALYZING
             </span>
           ) : (
-            "THINK DEEP ▶"
+            <span className="flex items-center gap-1.5">
+              ANALYZE
+              <span className="text-amber-400">→</span>
+            </span>
           )}
         </button>
       </div>
