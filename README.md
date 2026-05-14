@@ -2,6 +2,17 @@
 
 A full-stack AI research agent that breaks complex questions into parallel research threads, searches the web, summarizes findings, and synthesizes a final report - all streamed live to the UI.
 
+## Screenshots
+
+![Initial state](images/thumb.png)
+*Initial state — ready to accept a research query*
+
+![Research running](images/running.png)
+*Running — parallel researcher threads searching the web, results streaming in real time*
+
+![Research complete](images/done.png)
+*Complete — synthesized markdown report with all sources*
+
 ## Architecture
 
 ```

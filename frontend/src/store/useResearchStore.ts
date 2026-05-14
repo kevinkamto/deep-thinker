@@ -74,11 +74,13 @@ export const useResearchStore = create<ResearchStore>((set, get) => ({
         break
       }
       case "SUMMARY_DONE":
+        setAgentStatus("researcher", "done")
         setAgentStatus("summarizer", "active")
         break
       case "REPORT_CHUNK": {
         const chunk = (e.data.chunk as string) ?? ""
         set((state) => ({ reportChunks: [...state.reportChunks, chunk] }))
+        setAgentStatus("summarizer", "done")
         setAgentStatus("synthesizer", "active")
         break
       }
